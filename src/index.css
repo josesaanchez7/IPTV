@@ -1,0 +1,68 @@
+@import 'tailwindcss';
+
+@theme {
+  --color-brand: #e50914;
+  --color-brand-hover: #f6121d;
+}
+
+@utility scrollbar-hide {
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+/*
+ * Alturas de las barras fijas, para dejar hueco al contenido. En el móvil la barra superior
+ * lleva logo + chips y hay barra de pestañas abajo; las zonas seguras (notch, barra de gestos)
+ * se suman. Con la búsqueda del móvil abierta, la barra superior es de una sola fila.
+ */
+:root {
+  --header-h: calc(6.25rem + env(safe-area-inset-top));
+  --bottom-nav-h: calc(3.5rem + env(safe-area-inset-bottom));
+}
+
+@media (width < 48rem) {
+  .search-open {
+    --header-h: calc(3.5rem + env(safe-area-inset-top));
+  }
+}
+
+@media (width >= 48rem) {
+  :root {
+    --header-h: 4rem;
+    --bottom-nav-h: 0px;
+  }
+}
+
+@layer base {
+  html {
+    color-scheme: dark;
+    -webkit-tap-highlight-color: transparent;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    @apply bg-neutral-950 text-neutral-100 antialiased;
+  }
+
+  /* Sin la espera ni el zoom del doble toque en los controles. */
+  button,
+  label,
+  input,
+  a {
+    touch-action: manipulation;
+  }
+
+  /* Instalada como app: sin el "tirar para recargar" ni el rebote de una página web. */
+  @media (display-mode: standalone) {
+    html,
+    body {
+      overscroll-behavior-y: none;
+    }
+  }
+
+  :focus-visible {
+    @apply outline-2 outline-offset-2 outline-white;
+  }
+}
